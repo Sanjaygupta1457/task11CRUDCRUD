@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Add Item</h2>
+    <form id="addform">
+       <label for="" >Enter Name</label> 
+        <input type="text" id="give">
+        <label for="">Add Email</label>
+        <input type="email" id="email" >
+        <label for="">Phone Number</label>
+        <input type="number" id="pnumber" >
+        <input type="submit" id="submmit">
+    </form>
+    <ol id="items">
+       
+    </ol>
+    <script>
+        var form = document.getElementById('addform');
+        form.addEventListener('submit', myfunction);
+        //--------
+          var parent = document.getElementById('items');
+        // parent.addEventListener('onclick',deletevalue);
+
+        function myfunction(e){
+            e.preventDefault();
+            localStore(e);
+
+        var Input  = document.getElementById('give').value;
+        var Input2 =document.getElementById('email').value;
+        var Input3 = document.getElementById('pnumber').value;
+        //creating li element.
+        var list = document.createElement('li');
+        
+
+        let span1 = document.createElement('span');
+        span1.innerText=Input+'-';
+        list.appendChild(span1);
+        let span2 = document.createElement('span');
+        span2.innerText=Input2+'-';
+        list.appendChild(span2);
+        let span3 = document.createElement('span');
+        span3.innerText=Input3;
+        list.appendChild(span3);
+        //=------------
+        //btn creating
+          var delbtn = document.createElement('button');
+          delbtn.className='deletebtn';
+          delbtn.appendChild(document.createTextNode('X'));
+          list.appendChild(delbtn);
+          //add Edit button
+          var Editbtn = document.createElement('button');
+          Editbtn.className='editbtn';
+          Editbtn.appendChild(document.createTextNode('Edit'));
+          list.appendChild(Editbtn);
+          
+
+        //var parent = document.getElementById('items');
+        parent.appendChild(list);
+        }
+
+        //function for local storage value.
+        // var store = documennt.getElementById('submmit');
+        // store.addEventListener("onsubmit",localStore)
+        function localStore(e){
+            e.preventDefault();
+            var name = e.target.give.value;
+            var email = e.target.email.value;
+            var phonenumber =e.target.pnumber.value;
+            var obj ={
+                name,
+                email,
+                phonenumber,
+            }
+            axios.post("https://crudcrud.com/api/017d6cb81bae42868dd23584d1fc96f1/appointmentdata.",obj)
+            .then((response)=>{console.log(response)})
+            .catch((error)=>{
+                console.log(error)
+            })
+            //localStorage.setItem(obj.email,JSON.stringify(obj));
+        }
+        
+        //remove value from screen and local storage.
+        var edit = document.getElementsByClassName('editbtn');
+        edit.addEventListener('onclick',editvalue);
+        function editvalue(e){
+        
+        }
+        
+
+    </script>
+    
+</body>
+</html>
